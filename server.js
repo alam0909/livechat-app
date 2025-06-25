@@ -4,19 +4,21 @@ const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 const path = require('path');
 
-const PORT = process.env.PORT || 3000;
+// 🎯 Gunakan PORT dari environment untuk Railway
+const PORT = Number(process.env.PORT) || 3000;
+const HOST = '0.0.0.0';
 
-// 1. Static folder harus di atas route handler
+// 1. Akses file statis
 app.use(express.static(path.join(__dirname, 'public')));
 
-// 2. Pastikan root diarahkan ke customer.html
+// 2. Route '/' mengarah ke customer.html
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'customer.html'));
 });
 
-// — Socket.io chat logic tetap di sini (tanpa perubahan) —
+// --- Socket.IO live chat logic tidak diubah ---
 let admins = new Set();
-let chats = {};
+let chats = {};    // Struktur: { user_id: [ { sender, message } ] }
 let userInfo = {};
 
 io.on('connection', (socket) => {
@@ -33,6 +35,7 @@ io.on('connection', (socket) => {
       for (const uid in userInfo) {
         socket.emit('user_info', { user_id: uid, ...userInfo[uid] });
       }
+
     } else if (role === 'user') {
       userId = socket.id;
       userInfo[userId] = { name: data.name, company: data.company, sid: data.sid };
@@ -40,7 +43,7 @@ io.on('connection', (socket) => {
       console.log(`[USER] ${data.name} (${userId}) terhubung`);
 
       for (let admin of admins) {
-        admin.emit("user_info", {
+        admin.emit('user_info', {
           user_id: userId,
           name: data.name,
           company: data.company,
@@ -62,7 +65,6 @@ io.on('connection', (socket) => {
 
   socket.on('chat_message', (data) => {
     if (!userId || !data.message) return;
-
     const msg = {
       sender: data.sender,
       message: data.message,
@@ -103,9 +105,8 @@ io.on('connection', (socket) => {
   });
 });
 
-// 3. Fallback 404 untuk route / file tidak ditemukan
+// 3. Fallback untuk permintaan tidak dikenal
 app.use((req, res) => res.status(404).send('Not found'));
 
-http.listen(PORT, () => {
-  console.log(`💬 Live chat running on port ${PORT}`);
-});
+// 🔄 Jalankan server dengan host & port yang benar
+http.listen(PORT, HOST, () => console.log(`💬 Live chat running on http://${HOST}:${PORT}`));
