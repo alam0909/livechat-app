@@ -1,0 +1,14 @@
+livechat/
+├── server.js
+├── package.json
+├── public/
+│   ├── admin.html
+│   ├── customer.html
+│   ├── js/
+│   │   ├── admin.js
+│   │   └── customer.js
+│   ├── css/
+│   │   └── styles.css
+│   ├── img/
+│   │   └── logobaru.png
+│   └── beep.wav

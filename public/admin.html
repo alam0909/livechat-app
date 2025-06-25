@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin Chat - PT Mutiara Tanjung Lestari</title>
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/stylesadm.css" />
+  <style>
+
+  </style>
+</head>
+<body>
+
+  <header>
+  <div style="display: flex; align-items: center; gap: 10px;">
+    <img src="img/logobaru.png" alt="Logo" style="height: 30px;">
+    <span>PT Mutiara Tanjung Lestari</span>
+  </div>
+  
+</header>
+
+
+  <div class="chat-layout">
+    <div class="sidebar">
+      <h3>Users</h3>
+      <div id="userList"></div>
+      <button onclick="del()" style="margin-top:10px;">🗑 Hapus chat</button>
+    </div>
+
+    <div class="chat-content">
+      <div id="chat"></div>
+      <div class="chat-input">
+        <input id="msg" placeholder="Tulis balasan..." onkeypress="if(event.key==='Enter') send()" />
+        <button onclick="send()">Kirim</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    &copy; <span id="year"></span> PT Mutiara Tanjung Lestari. All rights reserved.
+  </footer>
+
+  <audio id="chatBeep" src="beep.wav" preload="auto"></audio>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="js/admin.js"></script>
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+
+</body>
+</html>
