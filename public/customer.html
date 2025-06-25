@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PT Mutiara Tanjung Lestari</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/stylescos.css">
+  <style>
+  </style>
+</head>
+<body>
+
+<header>
+  <img src="img/logobaru.png" alt="Logo">
+  <span>PT Mutiara Tanjung Lestari</span>
+</header>
+
+<div class="container">
+
+  <div id="user-info-form">
+    <center><h3>Log In</h3></center> <br>
+    <input type="text" id="name" placeholder="Nama Anda" required>
+    <input type="text" id="company" placeholder="Nama Perusahaan" required>
+    <input type="text" id="sid" placeholder="SID" required>
+    <button onclick="startChat()">Mulai Chat</button>
+  </div>
+
+  <div id="chat-area">
+    <div id="chat"></div>
+    <div class="chat-input">
+      <input id="msg" type="text" placeholder="Ketik pesan Anda..." onkeypress="if(event.key==='Enter') send()">
+      <button onclick="send()">Kirim</button>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  &copy; <span id="year"></span> PT Mutiara Tanjung Lestari. All rights reserved.
+</footer>
+
+<audio id="chatBeep" src="beep.wav" preload="auto"></audio>
+<script src="https://livechat-app.onrender.com/socket.io/socket.io.js"></script>
+<script src="js/customer.js"></script>
+<script>
+  document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+
+</body>
+</html>
